@@ -34,7 +34,7 @@ const displayFasion = fashions => {
     fashions.forEach(fashion => {
         console.log(fashion)
         const fashionDiv = document.createElement('div');
-        fashionDiv.classList.add('row', 'gap-3');
+        // fashionDiv.classList.add('row', 'gap-3');
         fashionDiv.innerHTML = `
        <div class="col-md-4">
        <img src="${fashion.thumbnail_url}" class="img-fluid rounded-start" alt="...">
@@ -42,12 +42,24 @@ const displayFasion = fashions => {
         <div class="col-md-8">
         <div class="card-body">
         <h5 class="card-title">${fashion.title}</h5>
-        <p class="card-text">${fashion.details.slice(0, 200)}</p>
+        <p class="card-text">${fashion.details}</p>
+        <img class="autor-images" src="${fashion.author.img}" alt="">
+        <i class="fa-thin fa-eye">${fashion.total_view}</i> 
+        <button onclick="newsDetails('${fashion}') " href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetailModal">show detail</button>
+        </button>    
         </div>
         </div>
        `;
+
         fashionContainer.appendChild(fashionDiv);
     })
 }
+const newsDetails = id => {
+    const url = `https://openapi.programming-hero.com/api/news/category/${id}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => console.log(data.data));
+}
+
 newsPortel();
 
